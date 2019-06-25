@@ -1,0 +1,37 @@
+import subprocess 
+
+from matplotlib import pyplot
+from matplotlib.animation import FuncAnimation
+from random import randrange
+
+
+figure = pyplot.figure()
+
+
+x,y  = [],[]
+
+line, = pyplot.plot_date(x,y,'-' )
+
+i = 0
+def update(frame) :
+        global i
+        try:
+            op = str(subprocess.check_output(["fping","8.8.8.8","-C","1"]))
+            print(op[int(op.find('bytes'))+7:int(op.find('('))-4])
+            x.append( int(op[int(op.find('bytes'))+7:int(op.find('('))-4]))
+        except :
+            x.append(9999)
+        y.append(i)
+        i+=1
+
+        line.set_data(x, y)
+        figure.gca().relim()
+        figure.gca().autoscale_view()
+        return line
+
+
+animation = FuncAnimation(figure, update, interval=200)
+pyplot.show()
+
+
+
