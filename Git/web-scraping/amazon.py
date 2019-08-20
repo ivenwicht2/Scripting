@@ -19,8 +19,6 @@ name = name.lstrip()
 prix = sel.xpath('//*[@id="priceblock_ourprice"]').extract_first()
 if prix == None : prix = sel.xpath('//*[@id="newBuyBoxPrice"]').extract_first()
 if prix == None : prix = sel.xpath('//*[@id="price_inside_buybox"]').extract_first()
-
-
 prix = re.sub("<.*?>|</.*?>"," ",prix)
 prix = prix.lstrip()
 
